@@ -6,7 +6,7 @@
 
 class QgisInterface;
 class QAction;
-//class WebDataDialog;
+class WebDataDialog;
 
 class WebDataPlugin: public QObject, public QgisPlugin
 {
@@ -24,7 +24,7 @@ class WebDataPlugin: public QObject, public QgisPlugin
   private:
     QgisInterface* mIface;
     QAction* mAction;
-//    WebDataDialog* mDialog;
+    WebDataDialog* mDialog;
 };
 
 #endif // WEBDATAPLUGIN_H

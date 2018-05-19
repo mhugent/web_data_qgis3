@@ -4,6 +4,7 @@
 
 SET (webdata_SRCS
      addservicedialog.cpp
+     webdatadialog.cpp
      webdatafiltermodel.cpp
      webdatamodel.cpp
      webdataplugin.cpp
@@ -11,9 +12,11 @@ SET (webdata_SRCS
 
 SET (webdata_UIS
      addservicedialogbase.ui
+     webdatadialogbase.ui
 )
 
 SET (webdata_MOC_HDRS
+     webdatadialog.h
      webdatamodel.h
      webdataplugin.h
 )

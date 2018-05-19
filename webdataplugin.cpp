@@ -1,5 +1,5 @@
 #include "webdataplugin.h"
-//#include "webdatadialog.h"
+#include "webdatadialog.h"
 #include "qgis.h"
 #include "qgisinterface.h"
 #include <QAction>
@@ -11,7 +11,7 @@ static const QString version_ = QObject::tr( "Version 1.0" );
 static const QString icon_ = ":/niwa/icons/nqmap.png";
 static const QString category_ = QObject::tr( "Web" );
 
-WebDataPlugin::WebDataPlugin( QgisInterface* iface ): mIface( iface ), mAction( 0 )/*, mDialog( 0 )*/
+WebDataPlugin::WebDataPlugin( QgisInterface* iface ): mIface( iface ), mAction( 0 ), mDialog( 0 )
 {
 
 }
@@ -19,7 +19,7 @@ WebDataPlugin::WebDataPlugin( QgisInterface* iface ): mIface( iface ), mAction( 
 WebDataPlugin::~WebDataPlugin()
 {
   delete mAction;
-//  delete mDialog;
+  delete mDialog;
 }
 
 void WebDataPlugin::initGui()
@@ -43,11 +43,11 @@ void WebDataPlugin::unload()
 
 void WebDataPlugin::showWebDataDialog()
 {
-  /*if ( !mDialog && mIface )
+  if ( !mDialog && mIface )
   {
     mDialog = new WebDataDialog( mIface, mIface->mainWindow() );
   }
-  mDialog->show();*/
+  mDialog->show();
 }
 
 
