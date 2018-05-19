@@ -3,6 +3,7 @@
 # Files
 
 SET (webdata_SRCS
+     webdatafiltermodel.cpp
      webdatamodel.cpp
      webdataplugin.cpp
 )
