@@ -3,9 +3,14 @@
 # Files
 
 SET (webdata_SRCS
+     addservicedialog.cpp
      webdatafiltermodel.cpp
      webdatamodel.cpp
      webdataplugin.cpp
+)
+
+SET (webdata_UIS
+     addservicedialogbase.ui
 )
 
 SET (webdata_MOC_HDRS
@@ -18,13 +23,13 @@ SET (webdata_RCCS  resources.qrc)
 ########################################################
 # Build
 
-#QT5_WRAP_UI (webdata_UIS_H  ${webdata_UIS})
+QT5_WRAP_UI (webdata_UIS_H  ${webdata_UIS})
 
 QT5_WRAP_CPP (webdata_MOC_SRCS  ${webdata_MOC_HDRS})
 
 QT5_ADD_RESOURCES(webdata_RCC_SRCS ${webdata_RCCS})
 
-ADD_LIBRARY (webdataplugin MODULE ${webdata_SRCS} ${webdata_MOC_SRCS} ${webdata_RCC_SRCS})
+ADD_LIBRARY (webdataplugin MODULE ${webdata_SRCS} ${webdata_MOC_SRCS} ${webdata_RCC_SRCS} ${webdata_UIS_H} )
 
 INCLUDE_DIRECTORIES(
   ${CMAKE_SOURCE_DIR}/src/core
@@ -41,6 +46,7 @@ INCLUDE_DIRECTORIES(
   ${CMAKE_BINARY_DIR}/src/core
   ${CMAKE_BINARY_DIR}/src/gui
   ${CMAKE_BINARY_DIR}/src/ui
+  ${CMAKE_CURRENT_BINARY_DIR}
 )
 INCLUDE_DIRECTORIES(SYSTEM
 ${GDAL_INCLUDE_DIR}
