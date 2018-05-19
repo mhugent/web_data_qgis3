@@ -87,7 +87,7 @@ QString WebDataDialog::serviceURLFromComboBox()
 
   //make service url
   QSettings settings;
-  QString url = settings.value( QString( "/Qgis/connections-" ) + serviceType.toLower() + "/" + mServicesComboBox->currentText() + QString( "/url" ) ).toString();
+  QString url = settings.value( QString( "/qgis/connections-" ) + serviceType.toLower() + "/" + mServicesComboBox->currentText() + QString( "/url" ) ).toString();
   if ( !url.endsWith( "?" ) && !url.endsWith( "&" ) )
   {
     if ( url.contains( "?" ) )
@@ -114,7 +114,7 @@ void WebDataDialog::on_mRemovePushButton_clicked()
   QString name = mServicesComboBox->itemText( currentIndex );
 
   QSettings s;
-  s.remove( "/Qgis/connections-" + serviceType.toLower() + "/" + name );
+  s.remove( "/qgis/connections-" + serviceType.toLower() + "/" + name );
   insertServices();
 }
 
@@ -204,7 +204,7 @@ void WebDataDialog::setServiceSetting( const QString& name, const QString& servi
   serviceName.replace( "/", "_" );
 
   QSettings s;
-  s.setValue( "/Qgis/connections-" + serviceType.toLower() + "/" + serviceName + "/url", url );
+  s.setValue( "/qgis/connections-" + serviceType.toLower() + "/" + serviceName + "/url", url );
   insertServices();
 }
 
@@ -218,7 +218,7 @@ void WebDataDialog::insertServices()
 void WebDataDialog::insertServices( const QString& service )
 {
   QSettings settings;
-  settings.beginGroup( "/Qgis/connections-" + service.toLower() );
+  settings.beginGroup( "/qgis/connections-" + service.toLower() );
   QStringList keys = settings.childGroups();
   QStringList::const_iterator it = keys.constBegin();
   for ( ; it != keys.constEnd(); ++it )
