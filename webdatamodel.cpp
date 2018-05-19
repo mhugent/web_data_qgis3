@@ -237,11 +237,9 @@ void WebDataModel::wmsCapabilitiesRequestFinished()
     childItemList.push_back( stylesItem );
 
     wmsTitleItem->appendRow( childItemList );
-    emit serviceAdded();
   }
 
-
-  //mStatusLabel->setText( tr( "Ready" ) );
+  emit serviceAdded();
 }
 
 void WebDataModel::wfsCapabilitiesRequestFinished()
