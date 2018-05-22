@@ -154,7 +154,8 @@ void WebDataDialog::on_mAddPushButton_clicked()
 void WebDataDialog::on_mAddNIWAServicesButton_clicked()
 {
 //  addServicesFromHtml( "https://www.niwa.co.nz/ei/feeds/report" );
-  addServicesFromCSW( "http://dc.niwa.co.nz/niwa_dc_cogs/srv/eng/csw" );
+//  addServicesFromCSW( "http://dc.niwa.co.nz/niwa_dc_cogs/srv/eng/csw" );
+    addServicesFromCSW( "http://150.242.41.247/geonetwork/srv/eng/csw" );
 }
 
 void WebDataDialog::on_mAddLINZServicesButton_clicked()
