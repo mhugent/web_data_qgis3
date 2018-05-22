@@ -7,6 +7,7 @@
 class QgisInterface;
 class QgsMapLayer;
 class QNetworkReply;
+class QProgressDialog;
 
 
 /**A model for storing services (WFS/WMS/WCS in future) and their layers*/
@@ -37,6 +38,7 @@ class WebDataModel: public QStandardItemModel
     void wfsCapabilitiesRequestFinished();
     void handleItemChange( QStandardItem* item );
     void syncLayerRemove( QStringList theLayerIds );
+    void setProgressValue( double progress );
 
   signals:
     void serviceAdded();
@@ -44,6 +46,7 @@ class WebDataModel: public QStandardItemModel
   private:
     QNetworkReply *mCapabilitiesReply;
     QgisInterface* mIface;
+    QProgressDialog* mProgressDialog;
 
     QString wfsUrlFromLayerIndex( const QModelIndex& index ) const;
     QgsDataSourceUri wmsUriFromIndex( const QModelIndex& index ) const;

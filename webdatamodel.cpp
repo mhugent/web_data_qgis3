@@ -26,7 +26,7 @@
 
 static const QString WFS_NAMESPACE = "http://www.opengis.net/wfs";
 
-WebDataModel::WebDataModel( QgisInterface* iface ): QStandardItemModel(), mCapabilitiesReply( 0 ), mIface( iface )
+WebDataModel::WebDataModel( QgisInterface* iface ): QStandardItemModel(), mCapabilitiesReply( 0 ), mIface( iface ), mProgressDialog( 0 )
 {
   QStringList headerLabels;
   headerLabels << tr( "Name" );
@@ -594,8 +594,9 @@ void WebDataModel::changeEntryToOffline( const QModelIndex& index )
         fileWriter.setMaxTileHeight( d.maximumTileSizeY() );
       }
 
-      //QProgressDialog pd( 0, tr( "Abort..." ), 0, 0 );
-      //pd.setWindowModality( Qt::WindowModal );
+      QProgressDialog pd( 0, tr( "Abort..." ), 0, 0 );
+      mProgressDialog = &pd;
+      pd.setWindowModality( Qt::WindowModal );
 
       QgsRasterPipe* pipe = new QgsRasterPipe();
       if ( !pipe->set( wmsLayer->dataProvider()->clone() ) )
@@ -603,7 +604,14 @@ void WebDataModel::changeEntryToOffline( const QModelIndex& index )
         QgsDebugMsg( "Cannot set pipe provider" );
         return;
       }
-      fileWriter.writeRaster( pipe, d.nColumns(), d.nRows(), d.outputRectangle(), wmsLayer->crs() /*todo: give QgsRasterBlockFeedback for progress report*/ );
+
+      pd.setMaximum( 100 );
+      pd.show();
+
+      QgsRasterBlockFeedback rasterFeedback;
+      connect( &rasterFeedback, SIGNAL( progressChanged( double ) ), this, SLOT( setProgressValue( double ) ) );
+      fileWriter.writeRaster( pipe, d.nColumns(), d.nRows(), d.outputRectangle(), wmsLayer->crs(), &rasterFeedback /*todo: give QgsRasterBlockFeedback for progress report*/ );
+      mProgressDialog = 0;
       if ( d.tileMode() )
       {
         filePath += ( "/" + layerId + ".vrt" );
@@ -1233,5 +1241,13 @@ void WebDataModel::legendMoveLayer( const QgsMapLayer* ml, const QgsMapLayer* af
 
       QgsLayerTreeGroup* nodeLayerParentGroup = QgsLayerTree::toGroup( mlTreeLayer->parent() );
       nodeLayerParentGroup->removeChildNode( mlTreeLayer );
+}
+
+void WebDataModel::setProgressValue( double progress )
+{
+    if( mProgressDialog )
+    {
+        mProgressDialog->setValue( (int)progress );
+    }
 }
 
